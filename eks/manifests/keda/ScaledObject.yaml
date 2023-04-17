@@ -1,0 +1,17 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: cockpit
+spec:
+  scaleTargetRef:
+    name: cockpit
+  minReplicaCount: 1
+  maxReplicaCount: 4
+  fallback:
+    failureThreshold: 20
+    replicas: 1
+  triggers:
+    - type: kubernetes-workload
+      metadata:
+        podSelector: 'app=cockpit'
+        value: '3'
